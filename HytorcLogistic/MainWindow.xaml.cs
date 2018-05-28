@@ -28,9 +28,9 @@ namespace HytorcLogistic
         public MainWindow()
         {
             InitializeComponent();
+            //Connect();
+            //SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
 
-            Connect();
-            SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
         }
 
         private void Connect()
@@ -112,6 +112,13 @@ namespace HytorcLogistic
             //    MessageBox.Show(ex.Message);
             //}
 
+        }
+
+        private void buttonLauncher_Click(object sender, RoutedEventArgs e)
+        {
+            Notificaction noty = new Notificaction("Se lanzó una notificación!", Notificaction.ICON_FILES.HAPPY);
+            noty.ShowDialog();
+            GC.SuppressFinalize(noty);
         }
     }
 }

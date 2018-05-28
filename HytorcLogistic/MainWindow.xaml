@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HytorcLogistic"
         mc:Ignorable="d"
-        Title="Hytorc Logistic" Height="745" Width="1370" Closing="Window_Closing">
+        Title="Hytorc Logistic" Height="745" Width="1370" Closing="Window_Closing" WindowState="Maximized" ResizeMode="NoResize">
     <Grid>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="82" Margin="1017,632,0,0" VerticalAlignment="Top" Width="335" Source="Resources/logocoisa.jpg"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="54" Margin="1121,660,0,0" VerticalAlignment="Top" Width="231" Source="Resources/logocoisa.jpg"/>
+        <Button x:Name="buttonLauncher" Content="Lanzar" HorizontalAlignment="Left" Margin="620,325,0,0" VerticalAlignment="Top" Width="75" Click="buttonLauncher_Click"/>
     </Grid>
 </Window>

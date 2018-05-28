@@ -92,6 +92,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Notification.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelLogistic.Context.cs">
@@ -109,7 +113,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelLogistic.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Notifications.cs" />
+    <Compile Include="Notification.xaml.cs">
+      <DependentUpon>Notification.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -154,6 +160,12 @@
       <DependentUpon>ModelLogistic.edmx</DependentUpon>
       <LastGenOutput>ModelLogistic.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\if_118Arrow_down_download_downloads_downloading_save_1886132.png" />
+    <Resource Include="Resources\if_188Backup_disk_data_data_storage_floppy_save_1886186.png" />
+    <Resource Include="Resources\if_338Big_emoji_face_happy_smile_smiley_1886033.png" />
+    <Resource Include="Resources\if_4_330394.png" />
+    <Resource Include="Resources\if_About_error_notification_help_info_information_1886031.png" />
+    <Resource Include="Resources\if_Add_character_include_more_person_user_1886171.png" />
     <Resource Include="Resources\logocoisa.jpg" />
   </ItemGroup>
   <ItemGroup>
