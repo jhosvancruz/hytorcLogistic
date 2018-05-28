@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
+
 namespace HytorcLogistic
 {
     /// <summary>
@@ -28,7 +30,7 @@ namespace HytorcLogistic
             InitializeComponent();
 
             Connect();
-            SendMail("<h2>prueba número 1<\\h2> Mail enviado desde Hytorc Logistic");
+            SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
         }
 
         private void Connect()
@@ -57,15 +59,15 @@ namespace HytorcLogistic
         }
        public void SendMail(string e)
         {
-            var fromAddress = new MailAddress("jhosvan@hotmail.com", "Jhosvan Cruz");
+            var fromAddress = new MailAddress("ecruz@hytorc.com.mx", "Esteban Cruz");
             var toAddress = new MailAddress("jhosvan@hotmail.com", "Mi");
-            const string fromPassword = "JhosTaker..";
+            const string fromPassword = "Lse*2756&";
             const string subject = "an error ocurred";
             string body = e;
 
             var smtp = new SmtpClient
             {
-                Host = "smtp-mail.outlook.com",
+                Host = "smtp.office365.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -80,6 +82,35 @@ namespace HytorcLogistic
             {
                 smtp.Send(message);
             }
+            //string htmlBody = "<html><body><h1>Picture</h1><br><img src=\"cid:Pic1\"></body></html>";
+            //AlternateView avHtml = AlternateView.CreateAlternateViewFromString
+            //    (htmlBody, null, MediaTypeNames.Text.Html);
+
+            //// Create a LinkedResource object for each embedded image
+            //LinkedResource pic1 = new LinkedResource(@"C:\Users\Jhosvan\Desktop\PROYECTO HYTORC-JHOS\logocoisa.jpg", MediaTypeNames.Image.Jpeg);
+            //pic1.ContentId = "logo";
+            //avHtml.LinkedResources.Add(pic1);
+
+
+            //// Add the alternate views instead of using MailMessage.Body
+            //MailMessage m = new MailMessage();
+            //m.AlternateViews.Add(avHtml);
+
+            //// Address and send the message
+            //m.From = new MailAddress("jhosvan@hotmail.com", "Jhosvan Cruz");
+            //m.To.Add(new MailAddress("jhosvan@hotmail.com", "Zamtest"));
+            //m.Subject = "A picture using alternate views";
+
+            //SmtpClient client = new SmtpClient("smtp-mail.outlook.com");
+            //try
+            //{
+            //    client.Port = 587;
+            //    client.Send(m);
+            //}
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
 
         }
     }
