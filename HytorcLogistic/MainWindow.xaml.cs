@@ -29,7 +29,7 @@ namespace HytorcLogistic
         {
             InitializeComponent();
             //Connect();
-            //SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
+            SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
 
         }
 
@@ -61,7 +61,7 @@ namespace HytorcLogistic
         {
             var fromAddress = new MailAddress("ecruz@hytorc.com.mx", "Esteban Cruz");
             var toAddress = new MailAddress("jhosvan@hotmail.com", "Mi");
-            const string fromPassword = "Lse*2756&";
+            const string fromPassword = "Eqt*3279&";
             const string subject = "an error ocurred";
             string body = e;
 
