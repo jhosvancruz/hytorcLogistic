@@ -25,5 +25,8 @@ namespace HytorcLogistic
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Users> UsersSet { get; set; }
+        public virtual DbSet<Clients> ClientsSet { get; set; }
+        public virtual DbSet<demoYassistance> demoYassistanceSet { get; set; }
     }
 }

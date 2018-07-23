@@ -79,6 +79,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Clients.cs">
+      <DependentUpon>ModelLogistic.tt</DependentUpon>
+    </Compile>
+    <Compile Include="demoYassistance.cs">
+      <DependentUpon>ModelLogistic.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Users.cs">
+      <DependentUpon>ModelLogistic.tt</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

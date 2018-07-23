@@ -17,7 +17,77 @@ advertencia 6013: La tabla o vista 'test.dbo.tester' no tiene definida una clave
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true" />
+        <EntityContainer Name="testEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="UsersSet" EntityType="testModel.Users" />
+          <EntitySet Name="ClientsSet" EntityType="testModel.Clients" />
+          <AssociationSet Name="ClientsUsers" Association="testModel.ClientsUsers">
+            <End Role="Clients" EntitySet="ClientsSet" />
+            <End Role="Users" EntitySet="UsersSet" />
+          </AssociationSet>
+          <EntitySet Name="demoYassistanceSet" EntityType="testModel.demoYassistance" />
+          <AssociationSet Name="demoYassistanceClients" Association="testModel.demoYassistanceClients">
+            <End Role="demoYassistance" EntitySet="demoYassistanceSet" />
+            <End Role="Clients" EntitySet="ClientsSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <Property Name="lastname" Type="String" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" />
+          <Property Name="suffix" Type="String" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="testModel.ClientsUsers" FromRole="Users" ToRole="Clients" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="companyName" Type="String" Nullable="false" />
+          <Property Name="phone" Type="String" Nullable="false" />
+          <Property Name="ext" Type="String" Nullable="false" />
+          <Property Name="nameContact" Type="String" Nullable="false" />
+          <Property Name="department" Type="String" Nullable="false" />
+          <Property Name="city" Type="String" Nullable="false" />
+          <Property Name="state" Type="String" Nullable="false" />
+          <Property Name="workCenter" Type="String" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="testModel.ClientsUsers" FromRole="Clients" ToRole="Users" />
+          <Property Name="UsersId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="demoYassistance" Relationship="testModel.demoYassistanceClients" FromRole="Clients" ToRole="demoYassistance" />
+        </EntityType>
+        <Association Name="ClientsUsers">
+          <End Type="testModel.Clients" Role="Clients" Multiplicity="*" />
+          <End Type="testModel.Users" Role="Users" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Clients">
+              <PropertyRef Name="UsersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="demoYassistance">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="demo" Type="Boolean" Nullable="false" />
+          <Property Name="assistance" Type="Boolean" Nullable="false" />
+          <Property Name="workCenter" Type="String" Nullable="false" />
+          <Property Name="dateStart" Type="DateTime" Nullable="false" />
+          <Property Name="dateEnd" Type="DateTime" Nullable="false" />
+          <Property Name="aplication" Type="String" Nullable="false" />
+          <Property Name="toolsUsed" Type="String" Nullable="false" />
+          <NavigationProperty Name="Clients" Relationship="testModel.demoYassistanceClients" FromRole="demoYassistance" ToRole="Clients" />
+        </EntityType>
+        <Association Name="demoYassistanceClients">
+          <End Type="testModel.demoYassistance" Role="demoYassistance" Multiplicity="*" />
+          <End Type="testModel.Clients" Role="Clients" Multiplicity="1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
