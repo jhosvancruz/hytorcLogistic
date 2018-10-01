@@ -16,7 +16,7 @@ using System.Data.SqlClient;
 using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
-
+using System.Windows.Forms;
 namespace HytorcLogistic
 {
     /// <summary>
@@ -25,10 +25,11 @@ namespace HytorcLogistic
     public partial class MainWindow : Window
     {
         SqlConnection conexion = new SqlConnection();
+        NotifyIcon notifyIconApp = new NotifyIcon();
         public MainWindow()
         {
             InitializeComponent();
-            Connect();
+            //Connect();
             //SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
 
         }
@@ -41,11 +42,11 @@ namespace HytorcLogistic
             {
                 conexion.ConnectionString = conexionstring;
                 conexion.Open();
-                MessageBox.Show("Conexión Éxitosa!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Information);
+                System.Windows.MessageBox.Show("Conexión Éxitosa!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (SqlException ex)
             {
-                MessageBox.Show("Mensaje: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Mensaje: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void QueryResults()
@@ -116,9 +117,13 @@ namespace HytorcLogistic
 
         private void buttonLauncher_Click(object sender, RoutedEventArgs e)
         {
-            Notificaction noty = new Notificaction("Se lanzó una notificación!", Notificaction.ICON_FILES.HAPPY);
-            noty.ShowDialog();
-            GC.SuppressFinalize(noty);
+            //Notificaction noty = new Notificaction("Se lanzó una notificación!", Notificaction.ICON_FILES.HAPPY);
+            //noty.ShowDialog();
+            notifyIconApp.BalloonTipIcon = ToolTipIcon.Info;
+            notifyIconApp.BalloonTipText = "Aplicación Iniciada";
+            notifyIconApp.BalloonTipTitle = "Aviso";
+            notifyIconApp.ShowBalloonTip(10000);
+            //GC.SuppressFinalize(noty);
         }
     }
 }
