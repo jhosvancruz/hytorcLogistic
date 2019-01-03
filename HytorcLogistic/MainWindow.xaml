@@ -1,13 +1,94 @@
-﻿<Window x:Class="HytorcLogistic.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HytorcLogistic"
+        xmlns:Forms="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms" xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="HytorcLogistic.MainWindow"
         mc:Ignorable="d"
-        Title="Hytorc Logistic" Height="745" Width="1370" Closing="Window_Closing" WindowState="Maximized" ResizeMode="NoResize">
+        Title="Alebrijes Ventas" Height="658" Width="1222" Closing="Window_Closing" WindowStartupLocation="CenterScreen" Icon="Resources/logo-alebrijes.ico">
     <Grid>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="54" Margin="1121,660,0,0" VerticalAlignment="Top" Width="231" Source="Resources/logocoisa.jpg"/>
-        <Button x:Name="buttonLauncher" Content="Lanzar" HorizontalAlignment="Left" Margin="620,325,0,0" VerticalAlignment="Top" Width="75" Click="buttonLauncher_Click"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="159" Margin="999,470,0,0" VerticalAlignment="Top" Width="207" Source="Resources/logo-alebrijes.png" Stretch="Fill"/>
+        <ToolBar x:Name="toolBar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="1214" Height="24" Margin="0,597,0,0">
+            <ListBoxItem Content="Hosting Status:"/>
+            <ListBoxItem x:Name="statusLabel"/>
+            <Forms:PictureBox ImageLocation="Resources/C:\Users\Software02\Documents\Visual Studio 2015\Projects\hytorcLogistic\HytorcLogistic\Resources\if_118Arrow_down_download_downloads_downloading_save_1886132.png"/>
+        </ToolBar>
+        <Menu x:Name="menu" HorizontalAlignment="Left" Height="21" VerticalAlignment="Top" Width="1216">
+            <MenuItem Header="Archivo">
+                <ListBoxItem Content="Abrir"/>
+                <ListBoxItem Content="Guardar"/>
+            </MenuItem>
+        </Menu>
+        <StackPanel HorizontalAlignment="Left" Height="193" Margin="0,200,0,0" VerticalAlignment="Top" Width="60" Background="#FF2899C0">
+            <Button x:Name="buttonRefresh" Content="" BorderThickness="0" Height="45" BorderBrush="{x:Null}" Click="buttonRefresh_Click" >
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="Resources/iconfinder_Repeat_2001883.png"/>
+                </Button.OpacityMask>
+                <Button.ContextMenu>
+                    <ContextMenu Focusable="False">
+                        <ContextMenu.Effect>
+                            <DropShadowEffect/>
+                        </ContextMenu.Effect>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/iconfinder_Repeat_2001883.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="Button_Add" Content="" BorderThickness="0" Height="45" BorderBrush="{x:Null}">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="Resources/iconfinder_Plus_2001887.png"/>
+                </Button.OpacityMask>
+                <Button.ContextMenu>
+                    <ContextMenu Focusable="False">
+                        <ContextMenu.Effect>
+                            <DropShadowEffect/>
+                        </ContextMenu.Effect>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/iconfinder_Plus_2001887.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="button_Sub" Content="" BorderThickness="0" Height="45" BorderBrush="{x:Null}">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="Resources/iconfinder_Minus_2001871.png"/>
+                </Button.OpacityMask>
+                <Button.ContextMenu>
+                    <ContextMenu Focusable="False">
+                        <ContextMenu.Effect>
+                            <DropShadowEffect/>
+                        </ContextMenu.Effect>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/iconfinder_Minus_2001871.png"/>
+                </Button.Background>
+            </Button>
+            <Button x:Name="button_Calendar" Content="" BorderThickness="0" Height="45" BorderBrush="{x:Null}">
+                <Button.OpacityMask>
+                    <ImageBrush ImageSource="Resources/iconfinder_calendar_1055101.png"/>
+                </Button.OpacityMask>
+                <Button.ContextMenu>
+                    <ContextMenu Focusable="False">
+                        <ContextMenu.Effect>
+                            <DropShadowEffect/>
+                        </ContextMenu.Effect>
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <Button.Background>
+                    <ImageBrush ImageSource="Resources/iconfinder_calendar_1055101.png"/>
+                </Button.Background>
+            </Button>
+        </StackPanel>
+        <Calendar x:Name="calendar" HorizontalAlignment="Left" Margin="0,410,0,0" VerticalAlignment="Top" Height="187" Width="211" BorderThickness="0" AutomationProperties.HelpText="Recordatorio">
+            <Calendar.BindingGroup>
+                <BindingGroup/>
+            </Calendar.BindingGroup>
+            <Calendar.Effect>
+                <BlurEffect Radius="1" RenderingBias="Quality"/>
+            </Calendar.Effect>
+        </Calendar>
     </Grid>
 </Window>

@@ -17,6 +17,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Windows.Forms;
+using System.Threading;
+using System.Diagnostics;
+using System.Windows.Threading;
+
 namespace HytorcLogistic
 {
     /// <summary>
@@ -25,29 +29,82 @@ namespace HytorcLogistic
     public partial class MainWindow : Window
     {
         SqlConnection conexion = new SqlConnection();
-        NotifyIcon notifyIconApp = new NotifyIcon();
+        internal DispatcherTimer timer = new DispatcherTimer();
+        private bool IsConnected { get; set; }
+        private Thread ConexionThread;
+        private int FlagThreadConexion = 0;
         public MainWindow()
         {
             InitializeComponent();
-            //Connect();
-            //SendMail("prueba número 1 Mail enviado desde Hytorc Logistic");
+            ConexionThread = new Thread(new ThreadStart(ConnectWithDBHosting));
+            TimerConexion();
+            //calendar.SelectedDate = new DateTime(2019,01,03);
+            calendar.SelectedDatesChanged += Calendar_SelectedDatesChanged;
+            //SendMail("prueba número 1 Mail enviado desde Alebrijes Ventas");
 
         }
 
-        private void Connect()
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            string conexionstring = "Data Source=DESKTOP-I7TFU8J\\SQLEXPRESS; Initial Catalog=test; Integrated Security=True";
+            foreach (var a in e.AddedItems)
+            {
+                Debug.WriteLine(a);
+            }
+            //throw new NotImplementedException();
+        }
+        private void TimerConexion()
+        {
+            timer.Interval = new TimeSpan(0, 0, 3);
+            timer.Tick += (s, a) =>
+            {
+                if (IsConnected)
+                    timer.Interval = new TimeSpan(0, 1, 0);
+                else
+                    timer.Interval = new TimeSpan(0, 0, 3);
+
+                if (FlagThreadConexion == 0)
+                    ConexionThread.Start();
+                else if (FlagThreadConexion == 2)
+                {
+                    ConexionThread = null;
+                    ConexionThread = new Thread(new ThreadStart(ConnectWithDBHosting));
+                    ConexionThread.Start();
+                }
+
+            };
+            timer.Start();
+        }
+
+        private void ConnectWithDBHosting()
+        {
+            FlagThreadConexion = 1;
+            string conexionstring = "Data Source=alebrijesventas.com; User ID=administrator_sql; Password=JhosTaker..2018; Initial Catalog=ventas; Integrated Security=false";
             try
             {
+                if (conexion.State == System.Data.ConnectionState.Open)
+                {
+                    conexion.Close();
+                }
                 conexion.ConnectionString = conexionstring;
                 conexion.Open();
-                System.Windows.MessageBox.Show("Conexión Éxitosa!", "Aviso", MessageBoxButton.OK, MessageBoxImage.Information);
+                IsConnected = true;
+                Dispatcher.Invoke(() =>
+                {
+                    statusLabel.Content = "Online";
+                    statusLabel.Foreground = new SolidColorBrush(Colors.Green);
+                });
+
             }
             catch (SqlException ex)
             {
-                System.Windows.MessageBox.Show("Mensaje: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Dispatcher.Invoke(() =>
+                {
+                    statusLabel.Content = "Off line";
+                    statusLabel.Foreground = new SolidColorBrush(Colors.Red);
+                });
+                IsConnected = false;
             }
+            FlagThreadConexion = 2;
         }
         private void QueryResults()
         {
@@ -56,31 +113,40 @@ namespace HytorcLogistic
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            conexion.Close();
+            if (IsConnected)
+                conexion.Close();
+            if (FlagThreadConexion == 1)
+            {
+                ConexionThread.Suspend();
+                ConexionThread = null;
+            }
+
         }
        public void SendMail(string e)
         {
-            var fromAddress = new MailAddress("ecruz@hytorc.com.mx", "Esteban Cruz");
+            var fromAddress = new MailAddress("admin@alebrijesventas.com", "Administrador");
             var toAddress = new MailAddress("jhosvan@hotmail.com", "Jhosvan Cruz");
-            const string fromPassword = "Eqt*3279&";
-            const string subject = "correo de prueba";
+            string fromPassword = "ja060892";
+            string subject = "correo de prueba";
             string body = e;
 
             var smtp = new SmtpClient
             {
-                Host = "smtp.office365.com",
+                Host = "mail.alebrijesventas.com",
                 Port = 587,
-                EnableSsl = true,
+                EnableSsl = false,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
+
                 Subject = subject,
                 Body = body
             })
             {
+                //message.Attachments.Add(); //Para adjuntar archivos en el correo.
                 smtp.Send(message);
             }
             //string htmlBody = "<html><body><h1>Picture</h1><br><img src=\"cid:Pic1\"></body></html>";
@@ -88,7 +154,7 @@ namespace HytorcLogistic
             //    (htmlBody, null, MediaTypeNames.Text.Html);
 
             //// Create a LinkedResource object for each embedded image
-            //LinkedResource pic1 = new LinkedResource(@"C:\Users\Jhosvan\Desktop\PROYECTO HYTORC-JHOS\logocoisa.jpg", MediaTypeNames.Image.Jpeg);
+            //LinkedResource pic1 = new LinkedResource(@"C:\Users\Software02\Documents\Alebrijes\logo-alebrijes.png", MediaTypeNames.Image.Jpeg);
             //pic1.ContentId = "logo";
             //avHtml.LinkedResources.Add(pic1);
 
@@ -98,32 +164,27 @@ namespace HytorcLogistic
             //m.AlternateViews.Add(avHtml);
 
             //// Address and send the message
-            //m.From = new MailAddress("jhosvan@hotmail.com", "Jhosvan Cruz");
+            //m.From = new MailAddress("admin@alebrijesventas.com", "Jhosvan Cruz");
             //m.To.Add(new MailAddress("jhosvan@hotmail.com", "Zamtest"));
             //m.Subject = "A picture using alternate views";
 
-            //SmtpClient client = new SmtpClient("smtp-mail.outlook.com");
+            //SmtpClient client = new SmtpClient("alebrijesventas.com");
             //try
             //{
-            //    client.Port = 587;
+            //    client.Port = 25;
             //    client.Send(m);
             //}
-            //catch(Exception ex)
+            //catch (Exception ex)
             //{
-            //    MessageBox.Show(ex.Message);
+            //    System.Windows.MessageBox.Show(ex.Message);
             //}
 
         }
 
-        private void buttonLauncher_Click(object sender, RoutedEventArgs e)
+        private void buttonRefresh_Click(object sender, RoutedEventArgs e)
         {
-            //Notificaction noty = new Notificaction("Se lanzó una notificación!", Notificaction.ICON_FILES.HAPPY);
-            //noty.ShowDialog();
-            notifyIconApp.BalloonTipIcon = ToolTipIcon.Info;
-            notifyIconApp.BalloonTipText = "Aplicación Iniciada";
-            notifyIconApp.BalloonTipTitle = "Aviso";
-            notifyIconApp.ShowBalloonTip(10000);
-            //GC.SuppressFinalize(noty);
+            if (!IsConnected)
+                ConnectWithDBHosting();
         }
     }
 }

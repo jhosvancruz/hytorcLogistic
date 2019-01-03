@@ -170,6 +170,13 @@
       <DependentUpon>ModelLogistic.edmx</DependentUpon>
       <LastGenOutput>ModelLogistic.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\iconfinder_calendar_1055101.png" />
+    <Resource Include="Resources\iconfinder_Minus_2001871.png" />
+    <Resource Include="Resources\iconfinder_Plus_2001887.png" />
+    <Resource Include="Resources\iconfinder_Repeat_2001883.png" />
+    <Resource Include="Resources\iconfinder_Settings_2001888.png" />
+    <Resource Include="Resources\logo-alebrijes.ico" />
+    <Resource Include="Resources\logo-alebrijes.png" />
     <Resource Include="Resources\if_118Arrow_down_download_downloads_downloading_save_1886132.png" />
     <Resource Include="Resources\if_188Backup_disk_data_data_storage_floppy_save_1886186.png" />
     <Resource Include="Resources\if_338Big_emoji_face_happy_smile_smiley_1886033.png" />
