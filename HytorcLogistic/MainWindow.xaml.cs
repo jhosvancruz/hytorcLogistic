@@ -28,6 +28,7 @@ namespace HytorcLogistic
     /// </summary>
     public partial class MainWindow : Window
     {
+        int flag = 0;
         SqlConnection conexion = new SqlConnection();
         internal DispatcherTimer timer = new DispatcherTimer();
         private bool IsConnected { get; set; }
