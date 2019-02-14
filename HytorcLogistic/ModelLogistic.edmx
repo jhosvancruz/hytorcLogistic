@@ -4,16 +4,152 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="testModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errores durante la generación:
-advertencia 6013: La tabla o vista 'test.dbo.tester' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
-        <EntityType Name="tester">
-          <Property Name="id" Type="int" />
-          <Property Name="name" Type="nchar" MaxLength="25" />
-        </EntityType>-->
-        <EntityContainer Name="testModelStoreContainer" />
-      </Schema>
-    </edmx:StorageModels>
+    <Schema Namespace="testModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="testModelStoreContainer">
+    <EntitySet Name="UsersSet" EntityType="testModel.Store.UsersSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ClientsSet" EntityType="testModel.Store.ClientsSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="demoYassistanceSet" EntityType="testModel.Store.demoYassistanceSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="InvoicesSet" EntityType="testModel.Store.InvoicesSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="VisitsSet" EntityType="testModel.Store.VisitsSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="ClientsUsers" Association="testModel.Store.ClientsUsers">
+      <End Role="Clients" EntitySet="ClientsSet" />
+      <End Role="Users" EntitySet="UsersSet" />
+    </AssociationSet>
+    <AssociationSet Name="demoYassistanceClients" Association="testModel.Store.demoYassistanceClients">
+      <End Role="demoYassistance" EntitySet="demoYassistanceSet" />
+      <End Role="Clients" EntitySet="ClientsSet" />
+    </AssociationSet>
+    <AssociationSet Name="ClientsInvoices" Association="testModel.Store.ClientsInvoices">
+      <End Role="Clients" EntitySet="ClientsSet" />
+      <End Role="Invoices" EntitySet="InvoicesSet" />
+    </AssociationSet>
+    <AssociationSet Name="ClientsVisits" Association="testModel.Store.ClientsVisits">
+      <End Role="Clients" EntitySet="ClientsSet" />
+      <End Role="Visits" EntitySet="VisitsSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UsersSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="lastname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="suffix" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ClientsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="companyName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ext" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="nameContact" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="department" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="city" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="state" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="workCenter" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="UsersId" Type="int" Nullable="false" />
+    <Property Name="Status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="credit_term" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="demoYassistanceSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="demo" Type="bit" Nullable="false" />
+    <Property Name="assistance" Type="bit" Nullable="false" />
+    <Property Name="workCenter" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="dateStart" Type="datetime" Nullable="false" />
+    <Property Name="dateEnd" Type="datetime" Nullable="false" />
+    <Property Name="aplication" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="toolsUsed" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Clients_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="InvoicesSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="bills_num" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="delivery_time" Type="datetime" Nullable="false" />
+    <Property Name="contract_num" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="invoice_num" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="creation_date" Type="datetime" Nullable="false" />
+    <Property Name="total_without_taxes" Type="float" Nullable="false" />
+    <Property Name="total_with_taxes" Type="float" Nullable="false" />
+    <Property Name="comments" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="payment_status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="commission_status" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="date_portal" Type="datetime" Nullable="false" />
+    <Property Name="ClientsId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="VisitsSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ClientsId" Type="int" Nullable="false" />
+    <Property Name="date" Type="datetime" Nullable="false" />
+    <Property Name="address" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="phone_number" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="reason" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="comments" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="time_arrival" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="effective_time" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="ClientsUsers">
+    <End Role="Clients" Type="testModel.Store.ClientsSet" Multiplicity="*" />
+    <End Role="Users" Type="testModel.Store.UsersSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Clients">
+        <PropertyRef Name="UsersId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="demoYassistanceClients">
+    <End Role="demoYassistance" Type="testModel.Store.demoYassistanceSet" Multiplicity="*" />
+    <End Role="Clients" Type="testModel.Store.ClientsSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="demoYassistance">
+        <PropertyRef Name="Clients_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClientsInvoices">
+    <End Role="Clients" Type="testModel.Store.ClientsSet" Multiplicity="1" />
+    <End Role="Invoices" Type="testModel.Store.InvoicesSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Invoices">
+        <PropertyRef Name="ClientsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ClientsVisits">
+    <End Role="Clients" Type="testModel.Store.ClientsSet" Multiplicity="1" />
+    <End Role="Visits" Type="testModel.Store.VisitsSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Clients">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Visits">
+        <PropertyRef Name="ClientsId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="testModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -28,6 +164,16 @@ advertencia 6013: La tabla o vista 'test.dbo.tester' no tiene definida una clave
           <AssociationSet Name="demoYassistanceClients" Association="testModel.demoYassistanceClients">
             <End Role="demoYassistance" EntitySet="demoYassistanceSet" />
             <End Role="Clients" EntitySet="ClientsSet" />
+          </AssociationSet>
+          <EntitySet Name="InvoicesSet" EntityType="testModel.Invoices" />
+          <AssociationSet Name="ClientsInvoices" Association="testModel.ClientsInvoices">
+            <End Role="Clients" EntitySet="ClientsSet" />
+            <End Role="Invoices" EntitySet="InvoicesSet" />
+          </AssociationSet>
+          <EntitySet Name="VisitsSet" EntityType="testModel.Visits" />
+          <AssociationSet Name="ClientsVisits" Association="testModel.ClientsVisits">
+            <End Role="Clients" EntitySet="ClientsSet" />
+            <End Role="Visits" EntitySet="VisitsSet" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Users">
@@ -57,6 +203,8 @@ advertencia 6013: La tabla o vista 'test.dbo.tester' no tiene definida una clave
           <NavigationProperty Name="Users" Relationship="testModel.ClientsUsers" FromRole="Clients" ToRole="Users" />
           <Property Name="UsersId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="demoYassistance" Relationship="testModel.demoYassistanceClients" FromRole="Clients" ToRole="demoYassistance" />
+          <Property Name="Status" Type="String" Nullable="false" />
+          <Property Name="credit_term" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="ClientsUsers">
           <End Type="testModel.Clients" Role="Clients" Multiplicity="*" />
@@ -88,14 +236,155 @@ advertencia 6013: La tabla o vista 'test.dbo.tester' no tiene definida una clave
           <End Type="testModel.demoYassistance" Role="demoYassistance" Multiplicity="*" />
           <End Type="testModel.Clients" Role="Clients" Multiplicity="1" />
         </Association>
+        <EntityType Name="Invoices">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="bills_num" Type="String" Nullable="false" />
+          <Property Name="delivery_time" Type="DateTime" Nullable="false" />
+          <Property Name="contract_num" Type="String" Nullable="false" />
+          <Property Name="invoice_num" Type="String" Nullable="false" />
+          <Property Name="creation_date" Type="DateTime" Nullable="false" />
+          <Property Name="total_without_taxes" Type="Double" Nullable="false" />
+          <Property Name="total_with_taxes" Type="Double" Nullable="false" />
+          <Property Name="comments" Type="String" Nullable="false" />
+          <Property Name="payment_status" Type="String" Nullable="false" />
+          <Property Name="commission_status" Type="String" Nullable="false" />
+          <Property Name="date_portal" Type="DateTime" Nullable="false" />
+          <Property Name="ClientsId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="ClientsInvoices">
+          <End Type="testModel.Clients" Role="Clients" Multiplicity="1" />
+          <End Type="testModel.Invoices" Role="Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="ClientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Visits">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientsId" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="address" Type="String" Nullable="false" />
+          <Property Name="phone_number" Type="String" Nullable="false" />
+          <Property Name="reason" Type="String" Nullable="false" />
+          <Property Name="comments" Type="String" Nullable="false" />
+          <Property Name="time_arrival" Type="String" Nullable="false" />
+          <Property Name="effective_time" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="ClientsVisits">
+          <End Type="testModel.Clients" Role="Clients" Multiplicity="1" />
+          <End Type="testModel.Visits" Role="Visits" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Visits">
+              <PropertyRef Name="ClientsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities" />
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="testModelStoreContainer" CdmEntityContainer="testEntities">
+    <EntitySetMapping Name="UsersSet">
+      <EntityTypeMapping TypeName="IsTypeOf(testModel.Users)">
+        <MappingFragment StoreEntitySet="UsersSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="suffix" ColumnName="suffix" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClientsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(testModel.Clients)">
+        <MappingFragment StoreEntitySet="ClientsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="companyName" ColumnName="companyName" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="ext" ColumnName="ext" />
+          <ScalarProperty Name="nameContact" ColumnName="nameContact" />
+          <ScalarProperty Name="department" ColumnName="department" />
+          <ScalarProperty Name="city" ColumnName="city" />
+          <ScalarProperty Name="state" ColumnName="state" />
+          <ScalarProperty Name="workCenter" ColumnName="workCenter" />
+          <ScalarProperty Name="UsersId" ColumnName="UsersId" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="credit_term" ColumnName="credit_term" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="demoYassistanceSet">
+      <EntityTypeMapping TypeName="IsTypeOf(testModel.demoYassistance)">
+        <MappingFragment StoreEntitySet="demoYassistanceSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="demo" ColumnName="demo" />
+          <ScalarProperty Name="assistance" ColumnName="assistance" />
+          <ScalarProperty Name="workCenter" ColumnName="workCenter" />
+          <ScalarProperty Name="dateStart" ColumnName="dateStart" />
+          <ScalarProperty Name="dateEnd" ColumnName="dateEnd" />
+          <ScalarProperty Name="aplication" ColumnName="aplication" />
+          <ScalarProperty Name="toolsUsed" ColumnName="toolsUsed" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="InvoicesSet">
+      <EntityTypeMapping TypeName="IsTypeOf(testModel.Invoices)">
+        <MappingFragment StoreEntitySet="InvoicesSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="bills_num" ColumnName="bills_num" />
+          <ScalarProperty Name="delivery_time" ColumnName="delivery_time" />
+          <ScalarProperty Name="contract_num" ColumnName="contract_num" />
+          <ScalarProperty Name="invoice_num" ColumnName="invoice_num" />
+          <ScalarProperty Name="creation_date" ColumnName="creation_date" />
+          <ScalarProperty Name="total_without_taxes" ColumnName="total_without_taxes" />
+          <ScalarProperty Name="total_with_taxes" ColumnName="total_with_taxes" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="payment_status" ColumnName="payment_status" />
+          <ScalarProperty Name="commission_status" ColumnName="commission_status" />
+          <ScalarProperty Name="date_portal" ColumnName="date_portal" />
+          <ScalarProperty Name="ClientsId" ColumnName="ClientsId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VisitsSet">
+      <EntityTypeMapping TypeName="IsTypeOf(testModel.Visits)">
+        <MappingFragment StoreEntitySet="VisitsSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ClientsId" ColumnName="ClientsId" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="address" ColumnName="address" />
+          <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+          <ScalarProperty Name="reason" ColumnName="reason" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+          <ScalarProperty Name="time_arrival" ColumnName="time_arrival" />
+          <ScalarProperty Name="effective_time" ColumnName="effective_time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="demoYassistanceClients" TypeName="testModel.demoYassistanceClients" StoreEntitySet="demoYassistanceSet">
+      <EndProperty Name="Clients">
+        <ScalarProperty Name="Id" ColumnName="Clients_Id" />
+      </EndProperty>
+      <EndProperty Name="demoYassistance">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -109,7 +398,7 @@ advertencia 6013: La tabla o vista 'test.dbo.tester' no tiene definida una clave
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
       </DesignerInfoPropertySet>
     </Options>

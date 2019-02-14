@@ -20,13 +20,14 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
 using System.Windows.Threading;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace HytorcLogistic
 {
     /// <summary>
     /// Lógica de interacción para MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : System.Windows.Window
     {
         int flag = 0;
         SqlConnection conexion = new SqlConnection();
@@ -186,6 +187,15 @@ namespace HytorcLogistic
         {
             if (!IsConnected)
                 ConnectWithDBHosting();
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            Excel.Application xlApp = new Excel.Application();
+            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(@"C:\Users\Software02\Documents\Alebrijes\PROYECTO HYTORC-JHOS\R-V-RV-09_Reporte_de_Visita_Rev_0.xlsx");
+            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
+            Excel.Range xlRange = xlWorksheet.UsedRange;
+
         }
     }
 }

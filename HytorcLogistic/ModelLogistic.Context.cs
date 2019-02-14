@@ -28,5 +28,7 @@ namespace HytorcLogistic
         public virtual DbSet<Users> UsersSet { get; set; }
         public virtual DbSet<Clients> ClientsSet { get; set; }
         public virtual DbSet<demoYassistance> demoYassistanceSet { get; set; }
+        public virtual DbSet<Invoices> InvoicesSet { get; set; }
+        public virtual DbSet<Visits> VisitsSet { get; set; }
     }
 }

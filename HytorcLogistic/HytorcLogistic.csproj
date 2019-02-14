@@ -43,6 +43,11 @@
     <Reference Include="INIFileParser, Version=2.5.2.0, Culture=neutral, PublicKeyToken=79af7b307b65cf3c, processorArchitecture=MSIL">
       <HintPath>..\packages\ini-parser.2.5.2\lib\net20\INIFileParser.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=8.0.11.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.8.0.11\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
@@ -86,7 +91,13 @@
     <Compile Include="demoYassistance.cs">
       <DependentUpon>ModelLogistic.tt</DependentUpon>
     </Compile>
+    <Compile Include="Invoices.cs">
+      <DependentUpon>ModelLogistic.tt</DependentUpon>
+    </Compile>
     <Compile Include="Users.cs">
+      <DependentUpon>ModelLogistic.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Visits.cs">
       <DependentUpon>ModelLogistic.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
@@ -165,6 +176,7 @@
       <LastGenOutput>ModelLogistic.Context.cs</LastGenOutput>
       <DependentUpon>ModelLogistic.edmx</DependentUpon>
     </Content>
+    <Content Include="ModelLogistic.edmx.sql" />
     <Content Include="ModelLogistic.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelLogistic.edmx</DependentUpon>

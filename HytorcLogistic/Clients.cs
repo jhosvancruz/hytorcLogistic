@@ -30,6 +30,8 @@ namespace HytorcLogistic
         public string state { get; set; }
         public string workCenter { get; set; }
         public int UsersId { get; set; }
+        public string Status { get; set; }
+        public int credit_term { get; set; }
     
         public virtual Users Users { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
